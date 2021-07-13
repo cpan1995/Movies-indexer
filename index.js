@@ -12,10 +12,21 @@ function yearFilter(objectData, begin, end){
 //In takes array of objects
 //returns an new array of objects that's been filtered
 function genreFilter(objectData, genre){
-    objectData.filter(data=> data.somehting.something.name === genre)
+  
+    console.log(objectData)
+    console.log(genre)
+    let newDataObj = []
+    for (let i = 0; i < objectData.length; i++){
+        let newObjGenre = objectData[i].Genre.split(', ')
+        if (newObjGenre.includes(genre)) {
+            newDataObj.push(objectData[i])
+        }
+    }
+
+    
     // we need to remove previous content and show only below
     removeContents()
-    renderMovie(objectData)
+    renderMovie(newDataObj)
 
 }
 //3rd Pass In.
@@ -34,7 +45,7 @@ function renderMovie(objectData){
 //in this function we should make all of the even listeners for each filter element
 //Like dropdowns, sliderFilters, etc
 function init(){
-    fetch("URL")
+    fetch("http://localhost:3000/movies")
     .then(resp => resp.json())
     .then(json => {
         json.split()
@@ -78,7 +89,3 @@ const removeContents = () => {
 function isInputValid(input) {
     (input.length > 4) ? true : false
 }
-
-
-
-
