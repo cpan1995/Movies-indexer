@@ -1,24 +1,24 @@
 
-// //we pass in 2 parameters for each filter. the Json object that're going to be using, and the filter itself to set as our condition.
-// //If filter matches, we insert that new element into a new object. then return that object
-// function yearFilter(objectData, filterNum){
-//     objectData.filter(data=> data.somehting.something.year === filterNum)
-//     removeContents()
-//     renderMovie(objectData)
-// }
-// //we go down each filter until we're done with all the filter. Each function should be creating a new variable contain the filtered elements //from the objectData parameter.
-// function catFilter(objectData, filterName){
-//     objectData.filter(data=> data.somehting.something.name === filterName)
-//     // we need to remove previous content and show only below
-//     removeContents()
-//     renderMovie(objectData)
+//we pass in 2 parameters for each filter. the Json object that're going to be using, and the filter itself to set as our condition.
+//If filter matches, we insert that new element into a new object. then return that object
+function yearFilter(objectData, filterNum){
+    objectData.filter(data=> data.somehting.something.year === filterNum)
+    removeContents()
+    renderMovie(objectData)
+}
+//we go down each filter until we're done with all the filter. Each function should be creating a new variable contain the filtered elements //from the objectData parameter.
+function catFilter(objectData, filterName){
+    objectData.filter(data=> data.somehting.something.name === filterName)
+    // we need to remove previous content and show only below
+    removeContents()
+    renderMovie(objectData)
 
-// }
-// //Finally once we're done filtering we call the render function to print it out to the HTML page.
-// function renderMovie(objectData){
+}
+//Finally once we're done filtering we call the render function to print it out to the HTML page.
+function renderMovie(objectData){
     
 
-// }
+}
 
 //we should also have an initialization function that prints out the filter options
 //in this function we should make all of the even listeners for each filter element
