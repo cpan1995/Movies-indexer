@@ -17,25 +17,26 @@
 // function renderMovie(objectData){
     
 
+// }
 
-// }
-// //we should also have an initialization function that prints out the filter options
-// //in this function we should make all of the even listeners for each filter element
-// //Like dropdowns, sliderFilters, etc
-// function init(){
-//     fetch("URL")
-//     .then(resp => resp.json())
-//     .then(json => {
-//         json.split()
-//         json.forEach(
-//             // Send whatever datatype to wherever
-//         )
-//     })
-// }
-// //We'll call the init function once the DOM is loaded
-// document.addEventListener('DOMContentLoaded', () => {
-//     init();
-// })
+//we should also have an initialization function that prints out the filter options
+//in this function we should make all of the even listeners for each filter element
+//Like dropdowns, sliderFilters, etc
+function init(){
+    fetch("http://localhost:3000/movies")
+    .then(resp => resp.json())
+    .then(json => {
+      console.log(json)
+        // json.split()
+        // json.forEach(
+            // Send whatever datatype to wherever
+        // )
+    })
+}
+//We'll call the init function once the DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    init();
+})
 
 // // Location can be changed if you want it happened before or after init()
 // // Meaning, do we want to show every movie on the page first?
@@ -67,20 +68,6 @@
 // function isInputValid(input) {
 //     (input.length > 4) ? true : false
 // }
-
-
-
-// Option 1
-
-var slider = document.getElementById("myRange");
-var output = document.getElementById("demo");
-output.innerHTML = slider.value;
-
-slider.oninput = function() {
-  output.innerHTML = this.value;
-}
-
-var slider = new Slider('#ex2', {});
 
 
 
