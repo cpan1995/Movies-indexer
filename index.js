@@ -1,16 +1,75 @@
 //we should also have an initialization function that prints out the filter options
 //in this function we should make all of the even listeners for each filter element
 //Like dropdowns, sliderFilters, etc
-function init(){
-    fetch("http://localhost:3000/movies")
-    .then(resp => resp.json())
-    .then(json => {
-      console.log(json)
+function init(key){
+    let genreSelector = document.querySelector('#genreID')
+    let genreArray = ['Comedy', 'Sci-Fi', 'Horror', 'Romance', 'Action', 'Thriller','Drama', 'Mystery', 'Crime', 'Animation', 'Adventure', 'Fantasy']
+    let genreType
+    
+    genreArray.forEach(genre => {
+      let newElement = document.createElement('option');
+      newElement.setAttribute('value', genre);
+      newElement.textContent = genre;
+      genreSelector.append(newElement);
+    })
+    
+    let movieName = document.querySelector('#queryForm');
+
+    genreSelector.addEventListener('change', (e)=> {
+      genreType = e.target.value
+    })
+
+    movieName.addEventListener('submit', (e)=> {
+      e.preventDefault();
+      // let beginYear = e.target.rangeBegin.value
+      // let endYear = e.target.rangeEnd.value
+      // let searchName = e.target.name.value
+
+      const searchObject = {
+        "begin": e.target.rangeBegin.value,
+        "endYear": e.target.rangeEnd.value,
+        "searchName": e.target.name.value,
+        "genreType": genreType,
+        "apiKey": key
+      }
+      getAllObjects(searchObject);
     })
 }
+
+function getAllObjects(searchObject){
+  let searchValue = searchObject.searchName.replace(' ', '_')
+  fetch(`https://www.omdbapi.com/?apikey=${searchObject['apiKey']}&s=${searchValue}&page=1`)
+  .then(res => res.json())
+  .then(data => {
+    if (parseInt(data.totalResults, 10) > 10){
+      let storePageNumber = Math.trunc((parseInt(data.totalResults, 10)/10) + 1);
+      let moviesObjects = getRestOfPages(searchObject, storePageNumber, searchValue);
+      renderMovie(moviesObjects)
+    }
+  });
+}
+
+function getRestOfPages(searchObject, storePageNumber,searchValue){
+  //let searchValue = searchObject.searchName.replace(' ', '_')
+  let moviesObjectArray = []
+  for(let i = 1; i<=storePageNumber; i++){
+    fetch(`https://www.omdbapi.com/?apikey=${searchObject['apiKey']}&s=${searchValue}&page=${i}`)
+    .then(res => res.json())
+    .then(data => {
+      if(data.Response == "True"){
+        moviesObjectArray.push(data)
+      }
+    })
+  }
+  return moviesObjectArray
+}
+
+
+
 //We'll call the init function once the DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    init();
+  const apiKey = '799cdd3c'
+  init(apiKey);
 })
 
 // we pass in 2 parameters for each filter. the Json object that're going to be using, and the filter itself to set as our condition.
@@ -80,5 +139,5 @@ function turnSearchIntoArray(nameFilter){
 
 //Finally once we're done filtering we call the render function to print it out to the HTML page.
 function renderMovie(objectData){
-    
+    console.log(objectData);
 }
