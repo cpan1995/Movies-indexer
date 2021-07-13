@@ -88,8 +88,25 @@ function genreFilter(objectData, genre, nameFilter){
 //Lastly, intakes an array of objects and the string from the search bar. If empty return the origin array. 
 //should call renderMovie once done. 
 function nameFilter(objectData, nameFilter){
+    let nameFinderArray = turnSearchIntoArray(nameFilter);
+    let newObjectData = []
+    objectData.forEach(element => {
+      if(nameFinderArray.includes(element.toLowerCase().split(' '))){
+        newObjectData.push(element);
+      }
+    })
+    renderMovie(newObjectData);
+}
 
-
+function turnSearchIntoArray(nameFilter){
+  let newArray = nameFilter.toLowerCase().split(' ')
+  let cleanedUpSearchArray = [];
+  newArray.forEach((element) => {
+    if(element.length > 4){
+      cleanedUpSearchArray.push(element);
+    }
+  })
+  return cleanedUpSearchArray
 }
 
 //Finally once we're done filtering we call the render function to print it out to the HTML page.
@@ -144,8 +161,3 @@ const removeContents = () => {
 function isInputValid(input) {
     (input.length > 4) ? true : false
 }
-
-
-
-
-
