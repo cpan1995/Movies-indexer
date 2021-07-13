@@ -75,13 +75,18 @@ function yearFilter(objectData, begin, end, genre, nameFilter) {
 // 2nd Pass In
 // In takes array of objects
 // returns an new array of objects that's been filtered
-function genreFilter(objectData, genre, nameFilter){
-    objectData.filter(data=> data.somehting.something.name === genre)
-    we need to remove previous content and show only below
+function genreFilter(objectData, genre){
+    console.log(objectData)
+    console.log(genre)
+    let newDataObj = []
+    for (let i = 0; i < objectData.length; i++){
+        let newObjGenre = objectData[i].Genre.split(', ')
+        if (newObjGenre.includes(genre)) {
+            newDataObj.push(objectData[i])
+        }
+    }
     removeContents()
-    renderMovie(objectData)
-
-
+    renderMovie(newDataObj)
 }
 //3rd Pass In.
 // this is the name filter function. Returns a filtered objectData.
