@@ -6,48 +6,12 @@ function init(){
     .then(resp => resp.json())
     .then(json => {
       console.log(json)
-        // json.split()
-        // json.forEach(
-            // Send whatever datatype to wherever
-        // )
     })
 }
 //We'll call the init function once the DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     init();
 })
-
-// Location can be changed if you want it happened before or after init()
-// Meaning, do we want to show every movie on the page first?
-// Add EventLister for Name Submit Event
-SearchForm.addEventListener("submit", (e) => {
-    const input = e.target.name.value
-    // how can we filter the input?
-    if(isInputValid(input)) { 
-    catFilter(input)
-    searchForm.reset()
-    } else {
-        alert("Your input is Invalid. Please try again!")
-        searchForm.reset()
-    }
-})
-
-// Add EventLister for Dropdown Event
-DropdownForm.addEventListener("change", (e) => {
-    yearFilter(e.target.name.value)
-    dropdownForm.reset()
-})
-
-// Remove Element from RenderSection
-const removeContents = () => {
-    document.querySelector("PlaceForRender").innerHTML = ""
-}
-
-// Check input is Valid
-function isInputValid(input) {
-    (input.length > 4) ? true : false
-}
-
 
 // we pass in 2 parameters for each filter. the Json object that're going to be using, and the filter itself to set as our condition.
 // If filter matches, we insert that new element into a new object. then return that object
