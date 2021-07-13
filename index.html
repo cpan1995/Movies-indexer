@@ -3,8 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- <script defer src="index.js"></script> -->
+    <script defer src="index.js"></script>
     <link rel="stylesheet" href="index.css">
+    
+    <!-- option 2 JQuery Links-->
+
+    <link rel="stylesheet" href="https://demos.jquerymobile.com/1.4.2/css/themes/default/jquery.mobile-1.4.2.min.css">  
+    <script src="https://demos.jquerymobile.com/1.4.2/js/jquery.js"></script>
+	  <script src="https://demos.jquerymobile.com/1.4.2/js/jquery.mobile-1.4.2.min.js"></script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movies Indexer</title>
 </head>
@@ -17,7 +24,7 @@
         <p>
            Recomment top 250 movies!
         </p>
-        <a href="" class="btn btn-outline">Go to IMDB</a>
+        <a href="https://www.imdb.com/" class="btn btn-outline">Go to IMDB</a>
       </div>
 
       <div class="showcase-form card">
@@ -27,16 +34,30 @@
             <input type="text" name= "name" placeholder="Movie Name" required>
             <input type="submit" value="Search" class="submit-btn">
           </div>
-
+          <!-- Option 1  Single Range-->
+          <h1>Option 1: Easy to use. Can't change minimum </h1>
+          <!-- https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_rangeslider-->
           <div class="form-control">
-            <h3>Which Year?</h3>
-                <select name="year">
-                  <option value="1990" selected>~1990</option>
-                  <option value="2000">1990~2000</option>
-                  <option value="2010">2000~2010</option>
-                 <option value="2020">2010~2020</option>
-                 <option value="2021">2020~</option>
-                </select> 
+            <div class="slidecontainer">
+              <h2> Year 
+                Range:</h2>
+              <p>Year: 1950 ~ <span id="demo"></span></p> 
+              <input id="myRange" type="range" min="1950" max="2021" value="2000" class="slider">
+            </div>
+          </div>
+          
+
+              <h1>Option 2: This is Jquery. </h1>
+              <!-- option 2-->
+              <!--https://codepen.io/Pierre_Hamel/pen/ocJEH-->
+              <form>
+                <div data-role="rangeslider">
+                    <label for="range-1a">Search Year Range :</label>
+                    <input type="range" name="range-1a" id="range-1a" min="1950" max="2021" value="1975" data-popup-enabled="true" data-show-value="true">
+                    <label for="range-1b">Rangeslider:</label>
+                    <input type="range" name="range-1b" id="range-1b" min="1950" max="2021" value="2000" data-popup-enabled="true" data-show-value="true">
+                </div>
+              </form>
         </form>
       </div>
     </div>
