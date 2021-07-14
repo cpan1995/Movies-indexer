@@ -21,10 +21,6 @@ function init(key){
 
     movieName.addEventListener('submit', (e)=> {
       e.preventDefault();
-      // let beginYear = e.target.rangeBegin.value
-      // let endYear = e.target.rangeEnd.value
-      // let searchName = e.target.name.value
-
       const searchObject = {
         "begin": e.target.rangeBegin.value,
         "endYear": e.target.rangeEnd.value,
@@ -35,7 +31,7 @@ function init(key){
       getAllObjects(searchObject);
     })
 }
-
+let storeObjectData = [];
 function getAllObjects(searchObject){
   let searchValue = searchObject.searchName.replace(' ', '_')
   fetch(`https://www.omdbapi.com/?apikey=${searchObject['apiKey']}&s=${searchValue}&page=1`)
@@ -43,41 +39,32 @@ function getAllObjects(searchObject){
   .then(data => {
     if (parseInt(data.totalResults, 10) > 10){
       let storePageNumber = Math.trunc((parseInt(data.totalResults, 10)/10) + 1);
-      let moviesObjects = getRestOfPages(searchObject, storePageNumber, searchValue);
-      renderMovie(moviesObjects)
+      getRestOfPages(searchObject, storePageNumber, searchValue);
     }
+
+    
   });
 }
 
 function getRestOfPages(searchObject, storePageNumber,searchValue){
-  //let searchValue = searchObject.searchName.replace(' ', '_')
-  let moviesObjectArray = []
   for(let i = 1; i<=storePageNumber; i++){
     fetch(`https://www.omdbapi.com/?apikey=${searchObject['apiKey']}&s=${searchValue}&page=${i}`)
     .then(res => res.json())
     .then(data => {
-      if(data.Response == "True"){
-        moviesObjectArray.push(data)
-      }
+      getEachMovie(data, searchObject);
     })
   }
-  return moviesObjectArray
 }
-
-
 
 //We'll call the init function once the DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-  const apiKey = '[UR KEY]'
+  const apiKey = '[UR_API]}'
   init(apiKey);
 })
 
 // we pass in 2 parameters for each filter. the Json object that're going to be using, and the filter itself to set as our condition.
 // If filter matches, we insert that new element into a new object. then return that object
 // First pass in. In take object return an array of filtered objects
-
-
-
 function yearFilter(objectData, begin, end, genre, nameFilter) {
     let newObjData = [];
     for ( const obj in objectData) {
@@ -138,6 +125,30 @@ function turnSearchIntoArray(nameFilter){
 }
 
 //Finally once we're done filtering we call the render function to print it out to the HTML page.
-function renderMovie(objectData){
-    console.log(objectData);
+function getEachMovie(titleObjects, searchObject){
+  if(titleObjects.Response == "True"){
+    titleObjects.Search.forEach(element => {
+      fetch(`https://www.omdbapi.com/?apikey=${searchObject['apiKey']}&i=${element.imdbID}`)
+      .then(res => res.json())
+      .then(data => {
+        renderTitle(data, searchObject)
+      })
+    })
+  }
+}
+
+function renderTitle(movie, searchObject){
+  let containerFinder = document.querySelector('.moviesList')
+  let movieContainer = document.createElement('div')
+  let imgPoster = document.createElement('img')
+  let plot = document.createElement('p')
+  imgPoster.src = movie.Poster;
+  imgPoster.className = "poster"
+  plot.textContent = movie.Plot;
+  console.log(movie)
+  movieContainer.append(imgPoster, plot)
+  containerFinder.append(movieContainer)
+  debugger
+  
+
 }
