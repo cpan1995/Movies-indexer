@@ -152,3 +152,35 @@ function renderTitle(movie, searchObject){
   
 
 }
+
+// this is Adding the CSS to the function
+
+function renderTitle(movie, searchObject){
+  let containerFinder = document.querySelector('.moviesList')
+  let movieContainer = document.createElement('div')
+  let imgPoster = document.createElement('img')
+  let plot = document.createElement('p')
+  imgPoster.src = movie.Poster;
+  imgPoster.className = "poster"
+  plot.textContent = movie.Plot;
+  console.log(movie)
+  // movieContainer.append(imgPoster, plot)
+  // containerFinder.append(movieContainer)
+
+  // better to have an img frame and text frame for CSS
+  let imgBox = document.createElement('div')
+  let textBox = document.createElement('div')
+
+  //Combining containers
+  imgBox.append(imgPoster)
+  textBox.append(plot)
+  movieContainer.append(imgBox, textBox)
+  containerFinder.append(movieContainer)
+
+  // Adding attributes
+  movieContainer.className = "box"
+  imgBox.className = "imgBox"
+  textBox.className = "text"
+
+
+}
