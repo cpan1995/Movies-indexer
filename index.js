@@ -3,7 +3,7 @@
 //Like dropdowns, sliderFilters, etc
 function init(key){
     let genreSelector = document.querySelector('#genreID')
-    let genreArray = ['Comedy', 'Sci-Fi', 'Horror', 'Romance', 'Action', 'Thriller','Drama', 'Mystery', 'Crime', 'Animation', 'Adventure', 'Fantasy']
+    let genreArray = ['Comedy', 'Sci-Fi', 'Horror', 'Romance', 'Action', 'Thriller','Drama', 'Mystery', 'Crime', 'Animation', 'Adventure', 'Fantasy', 'Documentary']
     let genreType
     
     genreArray.forEach(genre => {
@@ -13,6 +13,9 @@ function init(key){
       genreSelector.append(newElement);
     })
     
+    // let defaultOption = document.querySelector('#All')
+    // defaultOption.setAttribute('selected', "selected")
+    
     let movieName = document.querySelector('#queryForm');
 
     genreSelector.addEventListener('change', (e)=> {
@@ -21,6 +24,8 @@ function init(key){
 
     movieName.addEventListener('submit', (e)=> {
       e.preventDefault();
+      removeContainer();
+      console.log()
       const searchObject = {
         "begin": e.target.rangeBegin.value,
         "endYear": e.target.rangeEnd.value,
@@ -29,6 +34,7 @@ function init(key){
         "apiKey": key
       }
       getAllObjects(searchObject);
+      //movieName.reset();
     })
 }
 let storeObjectData = [];
@@ -58,71 +64,9 @@ function getRestOfPages(searchObject, storePageNumber,searchValue){
 
 //We'll call the init function once the DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-  const apiKey = '[UR_API]}'
+  const apiKey = '799cdd3c'
   init(apiKey);
 })
-
-// we pass in 2 parameters for each filter. the Json object that're going to be using, and the filter itself to set as our condition.
-// If filter matches, we insert that new element into a new object. then return that object
-// First pass in. In take object return an array of filtered objects
-function yearFilter(objectData, begin, end, genre, nameFilter) {
-    let newObjData = [];
-    for ( const obj in objectData) {
-        console.log(objectData[obj].Year)
-       
-      const year = parseInt(objectData[obj].Year, 10)
-      if (year >= begin && year <= end) {
-         newObjData.push(objectData[obj])
-  
-    }
-    genreFilter(newObjData, genre, nameFilter)
-  }
-}
-
-
-// we go down each filter until we're done with all the filter. Each function should be creating a new variable contain the filtered elements
-// from the objectData parameter.
-// 2nd Pass In
-// In takes array of objects
-// returns an new array of objects that's been filtered
-function genreFilter(objectData, genre){
-    console.log(objectData)
-    console.log(genre)
-    let newDataObj = []
-    for (let i = 0; i < objectData.length; i++){
-        let newObjGenre = objectData[i].Genre.split(', ')
-        if (newObjGenre.includes(genre)) {
-            newDataObj.push(objectData[i])
-        }
-    }
-    removeContents()
-    renderMovie(newDataObj)
-}
-//3rd Pass In.
-// this is the name filter function. Returns a filtered objectData.
-//Lastly, intakes an array of objects and the string from the search bar. If empty return the origin array. 
-//should call renderMovie once done. 
-function nameFilter(objectData, nameFilter){
-    let nameFinderArray = turnSearchIntoArray(nameFilter);
-    let newObjectData = []
-    objectData.forEach(element => {
-      if(nameFinderArray.includes(element.toLowerCase().split(' '))){
-        newObjectData.push(element);
-      }
-    })
-    renderMovie(newObjectData);
-}
-
-function turnSearchIntoArray(nameFilter){
-  let newArray = nameFilter.toLowerCase().split(' ')
-  let cleanedUpSearchArray = [];
-  newArray.forEach((element) => {
-    if(element.length > 4){
-      cleanedUpSearchArray.push(element);
-    }
-  })
-  return cleanedUpSearchArray
-}
 
 //Finally once we're done filtering we call the render function to print it out to the HTML page.
 function getEachMovie(titleObjects, searchObject){
@@ -131,13 +75,16 @@ function getEachMovie(titleObjects, searchObject){
       fetch(`https://www.omdbapi.com/?apikey=${searchObject['apiKey']}&i=${element.imdbID}`)
       .then(res => res.json())
       .then(data => {
-        renderTitle(data, searchObject)
+        filterFunction(data, searchObject)
       })
     })
   }
 }
-
-function renderTitle(movie, searchObject){
+// renders each movies from each promise made
+function renderTitle(movie){
+  let clickableLink = document.createElement('a')
+  clickableLink.setAttribute('href', `https://www.imdb.com/title/${movie.imdbID}/`)
+  clickableLink.setAttribute('target', '_blank')
   let containerFinder = document.querySelector('.moviesList')
   let movieContainer = document.createElement('div')
   let imgPoster = document.createElement('img')
@@ -145,10 +92,45 @@ function renderTitle(movie, searchObject){
   imgPoster.src = movie.Poster;
   imgPoster.className = "poster"
   plot.textContent = movie.Plot;
-  console.log(movie)
-  movieContainer.append(imgPoster, plot)
-  containerFinder.append(movieContainer)
-  debugger
-  
+  let title = document.createElement('h2')
+  title.textContent = `${movie.Title} (${movie.Year})`
+  let imgBox = document.createElement('div')
+  let textBox = document.createElement('div')
+  imgBox.append(imgPoster)
+  textBox.append(title, plot)
+  movieContainer.append(imgBox, textBox)
+  clickableLink.append(movieContainer)
+  containerFinder.append(clickableLink);
+  movieContainer.className = "box"
+  imgBox.className = "imgBox"
+  textBox.className = "text"
+}
 
+//filters out by year and genre
+function filterFunction(movie, searchObject){
+  if (movie.Poster == 'N/A' || movie.Plot == 'N/A' || movie.Title == 'N/A'){
+  }
+  else{
+    console.log(movie)
+    console.log(searchObject)
+    if(parseInt(searchObject.begin) <= parseInt(movie.Year) && parseInt(searchObject.endYear) >= parseInt(movie.Year)){
+      if(searchObject.genreType && searchObject.genreType!='All'){
+        let genreChecker= movie.Genre.split(', ')
+        console.log(genreChecker)
+        if(genreChecker.includes(searchObject.genreType)){
+          renderTitle(movie)
+        }
+      }
+      else{
+        renderTitle(movie)
+      }
+    }
+  }
+}
+//resets containers
+function removeContainer(){
+  let containerFinder = document.querySelector('.moviesList')
+  if(containerFinder){
+    containerFinder.innerHTML = ''
+  }
 }
