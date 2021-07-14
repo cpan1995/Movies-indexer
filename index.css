@@ -18,7 +18,7 @@
 body {
   font-family: 'Lato', sans-serif;
   color: #333;  
-  line-height: 1.6;
+  /* line-height: 1.6; */
 }
 
 a {
@@ -37,4 +37,46 @@ p {
   margin: 10px 0;
 }
 
+.moviesList {
+  display: flex;
+  justify-content: center;
+  flex-direction: row-reverse;
+  flex-wrap: wrap;
+  margin-top: 40px;
+}
 
+.moviesList .box {
+  width: 340px;
+  margin: 20px;
+  border: 15px solid #fff;
+  box-shadow: 0 5px 35px rgba(0,0,0,0.08);
+}
+
+.moviesList .box .imgBox {
+  position: relative;
+  width: 100%;
+  height: 400px;
+}
+
+.moviesList .box .imgBox img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height:100%;
+  object-fit: cover;
+}
+
+.moviesList .box .text {
+  padding: 15px 0 5px;
+}
+
+.moviesList .box .text h2 {
+  font-style: oblique;
+  font-weight: bolder;
+}
+
+.moviesList .box .text p {
+  font-weight: 400;
+  color: #111;
+}
