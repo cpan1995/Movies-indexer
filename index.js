@@ -64,7 +64,7 @@ function getRestOfPages(searchObject, storePageNumber,searchValue){
 
 //We'll call the init function once the DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-  const apiKey = '799cdd3c'
+  const apiKey = '[APIKEY]'
   init(apiKey);
 })
 
@@ -87,13 +87,16 @@ function renderTitle(movie){
   clickableLink.setAttribute('target', '_blank')
   let containerFinder = document.querySelector('.moviesList')
   let movieContainer = document.createElement('div')
+  movieContainer.id = 'movieBox'
   let imgPoster = document.createElement('img')
   let plot = document.createElement('p')
+  plot.setAttribute('id', 'plotDiv');
   imgPoster.src = movie.Poster;
   imgPoster.className = "poster"
   plot.textContent = movie.Plot;
   let title = document.createElement('h2')
   title.textContent = `${movie.Title} (${movie.Year})`
+  title.id = "titleID"
   let imgBox = document.createElement('div')
   let textBox = document.createElement('div')
   imgBox.append(imgPoster)
@@ -104,6 +107,8 @@ function renderTitle(movie){
   movieContainer.className = "box"
   imgBox.className = "imgBox"
   textBox.className = "text"
+  
+
 }
 
 //filters out by year and genre
@@ -125,7 +130,8 @@ function filterFunction(movie, searchObject){
         renderTitle(movie)
       }
     }
-  }
+  } 
+  // debugger;
 }
 //resets containers
 function removeContainer(){
