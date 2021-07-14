@@ -64,7 +64,7 @@ function getRestOfPages(searchObject, storePageNumber,searchValue){
 
 //We'll call the init function once the DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-  const apiKey = '799cdd3c'
+  const apiKey = '[API_KEY]'
   init(apiKey);
 })
 
