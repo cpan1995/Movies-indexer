@@ -5,23 +5,18 @@ function init(key){
     let genreSelector = document.querySelector('#genreID')
     let genreArray = ['Comedy', 'Sci-Fi', 'Horror', 'Romance', 'Action', 'Thriller','Drama', 'Mystery', 'Crime', 'Animation', 'Adventure', 'Fantasy', 'Documentary']
     let genreType
-    
     genreArray.forEach(genre => {
       let newElement = document.createElement('option');
       newElement.setAttribute('value', genre);
       newElement.textContent = genre;
       genreSelector.append(newElement);
     })
-    
     // let defaultOption = document.querySelector('#All')
     // defaultOption.setAttribute('selected', "selected")
-    
     let movieName = document.querySelector('#queryForm');
-
     genreSelector.addEventListener('change', (e)=> {
       genreType = e.target.value
     })
-
     movieName.addEventListener('submit', (e)=> {
       e.preventDefault();
       removeContainer();
@@ -47,11 +42,8 @@ function getAllObjects(searchObject){
       let storePageNumber = Math.trunc((parseInt(data.totalResults, 10)/10) + 1);
       getRestOfPages(searchObject, storePageNumber, searchValue);
     }
-
-    
   });
 }
-
 function getRestOfPages(searchObject, storePageNumber,searchValue){
   for(let i = 1; i<=storePageNumber; i++){
     fetch(`https://www.omdbapi.com/?apikey=${searchObject['apiKey']}&s=${searchValue}&page=${i}`)
@@ -61,13 +53,11 @@ function getRestOfPages(searchObject, storePageNumber,searchValue){
     })
   }
 }
-
 //We'll call the init function once the DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-  const apiKey = '[API_KEY]'
+  const apiKey = [API KEY]
   init(apiKey);
 })
-
 //Finally once we're done filtering we call the render function to print it out to the HTML page.
 function getEachMovie(titleObjects, searchObject){
   if(titleObjects.Response == "True"){
@@ -87,13 +77,16 @@ function renderTitle(movie){
   clickableLink.setAttribute('target', '_blank')
   let containerFinder = document.querySelector('.moviesList')
   let movieContainer = document.createElement('div')
+  movieContainer.id = 'movieBox'
   let imgPoster = document.createElement('img')
   let plot = document.createElement('p')
+  plot.setAttribute('id', 'plotDiv');
   imgPoster.src = movie.Poster;
   imgPoster.className = "poster"
   plot.textContent = movie.Plot;
   let title = document.createElement('h2')
   title.textContent = `${movie.Title} (${movie.Year})`
+  title.id = "titleID"
   let imgBox = document.createElement('div')
   let textBox = document.createElement('div')
   imgBox.append(imgPoster)
@@ -105,7 +98,6 @@ function renderTitle(movie){
   imgBox.className = "imgBox"
   textBox.className = "text"
 }
-
 //filters out by year and genre
 function filterFunction(movie, searchObject){
   if (movie.Poster == 'N/A' || movie.Plot == 'N/A' || movie.Title == 'N/A'){
@@ -125,7 +117,8 @@ function filterFunction(movie, searchObject){
         renderTitle(movie)
       }
     }
-  }
+  } 
+  // debugger;
 }
 //resets containers
 function removeContainer(){
