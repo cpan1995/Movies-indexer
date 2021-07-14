@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <script defer src="index.js"></script>
     <link rel="stylesheet" href="index.css">
     
     <!-- option 2 JQuery Links-->
@@ -14,6 +13,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movies Indexer</title>
+    <script defer src="index.js"></script>
 </head>
 <body>
  <!-- Showcase -->
@@ -39,7 +39,9 @@
               <input type="range" name="rangeEnd" id="range-1b" min="1950" max="2021" value="2021" data-popup-enabled="true" data-show-value="true">
             </div>
             <label for="Select Genre"> Choose Genre</label>
-            <select name="genre" id="genreID"></select>
+            <select name="genre" id="genreID">
+              <option value="">All</option>
+            </select>
             <input type="submit" value="Submit">
           </div>
         </form>
@@ -47,7 +49,8 @@
     </div>
   </section>
   <div class=moviesList>
-
+    
   </div>
+
 </body>
 </html>
