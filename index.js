@@ -55,7 +55,7 @@ function getRestOfPages(searchObject, storePageNumber,searchValue){
 }
 //We'll call the init function once the DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-  const apiKey = [API KEY]
+  const apiKey = [API KEY HERE]
   init(apiKey);
 })
 //Finally once we're done filtering we call the render function to print it out to the HTML page.
