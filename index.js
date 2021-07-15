@@ -36,7 +36,18 @@ function init(key){
       getAllObjects(searchObject);
       //movieName.reset();
     })
+    resetForm(movieName)
 }
+
+function resetForm(movieName) {
+  document.querySelector('#resetButton').addEventListener('click', () => {
+    let containerFinder = document.querySelector('.moviesList')
+
+    movieName.reset()
+    containerFinder.innerHTML = ""
+  })
+}
+
 let storeObjectData = [];
 function getAllObjects(searchObject){
   let searchValue = searchObject.searchName.replace(' ', '_')

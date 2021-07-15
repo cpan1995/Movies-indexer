@@ -139,14 +139,11 @@ p {
 
 }
 
-/* #submitButton{
-  margin-left: 70%;
-  margin-right: 70%;
-} */
+
 
 .ui-btn.ui-input-btn.ui-corner-all.ui-shadow{
   margin-left: 45%;
-  margin-right: 45%
+  margin-right: 45%;
 }
 
 .ui-btn.ui-input-btn.ui-corner-all.ui-shadow:hover{
@@ -159,4 +156,8 @@ p {
 #submitButton:hover {
   background-color: #047aed;
   opacity: .2
+}
+
+.moviesList .box:hover {
+  box-shadow: 0 5px 35px rgb(255, 255, 255, 1);
 }
