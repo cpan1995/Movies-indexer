@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap');
-
 :root {
   --primary-color:  #047aed;
   --secondary-color:  #1c3fa8;
@@ -8,76 +7,58 @@
   --success-color: #5cb85c;
   --error-color: #d9534f;
 }
-
-
 * {
   box-sizing: border-box;
   padding : 0;
   margin: 0px;
-  
 }
-
 #genreID {
   background-color: white;
-
 }
-
 .ui-btn.ui-icon-carat-d.ui-btn-icon-right.ui-corner-all.ui-shadow {
   margin-left: 30%;
   margin-right: 30%;
 }
-
 body {
   /* font-family: 'Lato', sans-serif; */
   font-family: "Roboto Slab", serif;
 }
-
 a {
     text-decoration: none;
     color:white;
-  
 }
-
 h1, h2 {
   font-weight: 300px;
   line-height: 1.2;
   margin: 10px 0;
   color: white
 }
-
 p {
   margin: 10px 0;
   color: white
 }
-
 .moviesList {
   display: flex;
   justify-content: center;
   flex-direction: row-reverse;
   flex-wrap: wrap;
   margin-top: 40px;
+  padding-left: 10%;
+  padding-right: 10%;
 }
 #movieBox {
   border-radius: 2%;
-  
 }
-
 .moviesList .box {
   width: 340px;
   margin: 20px;
   box-shadow: 0 5px 35px rgb(255, 255, 255, 0.8);
-
-
 }
-
-
 .moviesList .box .imgBox {
   position: relative;
   width: 100%;
   height: 400px;
- 
 }
-
 .moviesList .box .imgBox img {
   position: absolute;
   top: 0;
@@ -87,71 +68,60 @@ p {
   object-fit: cover;
   border-radius: 2%;
 }
-
 .moviesList .box .text {
   padding: 15px 0 5px;
 }
-
 .moviesList .box .text h2 {
   font-style: oblique;
   font-weight: bolder;
   text-align: center;
 }
-
 .moviesList .box .text p {
   color: white;
   font-weight: lighter;
   text-align: center;
   font-size: 13px
 }
-
 .search {
   text-align: center;
   margin-right: 10%;
   margin-left: 10%;
-
+  padding-bottom: 1%;
 }
-
 .showcase-text {
   padding: 20px;
-  
 }
 .ui-page.ui-page-theme-a.ui-page-active{
   background-color: black;
 }
-
 /* div {
   background-color: black;
 } */
-
 #range-1a-label{
   text-shadow: none;
   color: white
 }
-
 #chooseGenre {
   text-shadow: none;
   color: white
 }
-
 .text{
   overflow: hidden;
-
 }
-
-
-
+/* #submitButton{
+  margin-left: 70%;
+  margin-right: 70%;
+} */
 .ui-btn.ui-input-btn.ui-corner-all.ui-shadow{
-  margin-left: 45%;
-  margin-right: 45%;
+  margin-left: 0.5%;
+  margin-right: 0.5%;
+  min-width: 300px;
 }
-
 .ui-btn.ui-input-btn.ui-corner-all.ui-shadow:hover{
   font-size: 110%;
   opacity: 1;
   letter-spacing: 1px;
   transition: 0.1s
-
 }
 #submitButton:hover {
   background-color: #047aed;
@@ -160,4 +130,12 @@ p {
 
 .moviesList .box:hover {
   box-shadow: 0 5px 35px rgb(255, 255, 255, 1);
+}
+
+#buttonContainer{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  min-height: 100px;
 }

@@ -1,27 +1,25 @@
-//we should also have an initialization function that prints out the filter options
-//in this function we should make all of the even listeners for each filter element
-//Like dropdowns, sliderFilters, etc
+//Call the init function once the DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+  const apiKey = [APIKEY]
+  init(apiKey);
+})
+
+//Initionalization Function, Renders Selectors Container
+//Plus adds eventlisteners for submit. 
 function init(key){
     let genreSelector = document.querySelector('#genreID')
     let genreArray = ['Comedy', 'Sci-Fi', 'Horror', 'Romance', 'Action', 'Thriller','Drama', 'Mystery', 'Crime', 'Animation', 'Adventure', 'Fantasy', 'Documentary']
     let genreType
-    
     genreArray.forEach(genre => {
       let newElement = document.createElement('option');
       newElement.setAttribute('value', genre);
       newElement.textContent = genre;
       genreSelector.append(newElement);
     })
-    
-    // let defaultOption = document.querySelector('#All')
-    // defaultOption.setAttribute('selected', "selected")
-    
     let movieName = document.querySelector('#queryForm');
-
     genreSelector.addEventListener('change', (e)=> {
       genreType = e.target.value
     })
-
     movieName.addEventListener('submit', (e)=> {
       e.preventDefault();
       removeContainer();
@@ -34,21 +32,12 @@ function init(key){
         "apiKey": key
       }
       getAllObjects(searchObject);
-      //movieName.reset();
     })
     resetForm(movieName)
 }
 
-function resetForm(movieName) {
-  document.querySelector('#resetButton').addEventListener('click', () => {
-    let containerFinder = document.querySelector('.moviesList')
-
-    movieName.reset()
-    containerFinder.innerHTML = ""
-  })
-}
-
-let storeObjectData = [];
+//Traversing Search API. Stores the total number of pages from the API call.
+//Passes pageNumber infomation over to getRestOfPages()
 function getAllObjects(searchObject){
   let searchValue = searchObject.searchName.replace(' ', '_')
   fetch(`https://www.omdbapi.com/?apikey=${searchObject['apiKey']}&s=${searchValue}&page=1`)
@@ -58,11 +47,10 @@ function getAllObjects(searchObject){
       let storePageNumber = Math.trunc((parseInt(data.totalResults, 10)/10) + 1);
       getRestOfPages(searchObject, storePageNumber, searchValue);
     }
-
-    
   });
 }
-
+//Iterates through all the pages possible from search call. 
+//Passes over data over to getEachMovie() function
 function getRestOfPages(searchObject, storePageNumber,searchValue){
   for(let i = 1; i<=storePageNumber; i++){
     fetch(`https://www.omdbapi.com/?apikey=${searchObject['apiKey']}&s=${searchValue}&page=${i}`)
@@ -73,13 +61,8 @@ function getRestOfPages(searchObject, storePageNumber,searchValue){
   }
 }
 
-//We'll call the init function once the DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-  const apiKey = '[APIKEY]'
-  init(apiKey);
-})
-
-//Finally once we're done filtering we call the render function to print it out to the HTML page.
+//Pulls Each possible imdbID stores in fetch call for the searchByID api call
+//Passes each movie pulled into filterFunction
 function getEachMovie(titleObjects, searchObject){
   if(titleObjects.Response == "True"){
     titleObjects.Search.forEach(element => {
@@ -91,7 +74,32 @@ function getEachMovie(titleObjects, searchObject){
     })
   }
 }
-// renders each movies from each promise made
+
+//Filters Out Function by year and genre
+//This would have been better if we had a SQL db to search by
+//Instead of doing multiple nested if else statements.
+function filterFunction(movie, searchObject){
+  if (movie.Poster == 'N/A' || movie.Plot == 'N/A' || movie.Title == 'N/A'){
+  }
+  else{
+    console.log(movie)
+    console.log(searchObject)
+    if(parseInt(searchObject.begin) <= parseInt(movie.Year) && parseInt(searchObject.endYear) >= parseInt(movie.Year)){
+      if(searchObject.genreType && searchObject.genreType!='All'){
+        let genreChecker= movie.Genre.split(', ')
+        console.log(genreChecker)
+        if(genreChecker.includes(searchObject.genreType)){
+          renderTitle(movie)
+        }
+      }
+      else{
+        renderTitle(movie)
+      }
+    }
+  } 
+}
+
+// Renders each movie/title
 function renderTitle(movie){
   let clickableLink = document.createElement('a')
   clickableLink.setAttribute('href', `https://www.imdb.com/title/${movie.imdbID}/`)
@@ -118,36 +126,19 @@ function renderTitle(movie){
   movieContainer.className = "box"
   imgBox.className = "imgBox"
   textBox.className = "text"
-  
-
 }
 
-//filters out by year and genre
-function filterFunction(movie, searchObject){
-  if (movie.Poster == 'N/A' || movie.Plot == 'N/A' || movie.Title == 'N/A'){
-  }
-  else{
-    console.log(movie)
-    console.log(searchObject)
-    if(parseInt(searchObject.begin) <= parseInt(movie.Year) && parseInt(searchObject.endYear) >= parseInt(movie.Year)){
-      if(searchObject.genreType && searchObject.genreType!='All'){
-        let genreChecker= movie.Genre.split(', ')
-        console.log(genreChecker)
-        if(genreChecker.includes(searchObject.genreType)){
-          renderTitle(movie)
-        }
-      }
-      else{
-        renderTitle(movie)
-      }
-    }
-  } 
-  // debugger;
-}
-//resets containers
+//resets containers whenever needed
 function removeContainer(){
   let containerFinder = document.querySelector('.moviesList')
   if(containerFinder){
     containerFinder.innerHTML = ''
   }
+}
+function resetForm(movieName) {
+  document.querySelector('#resetButton').addEventListener('click', () => {
+    let containerFinder = document.querySelector('.moviesList')
+    movieName.reset()
+    containerFinder.innerHTML = ""
+  })
 }
