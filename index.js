@@ -1,6 +1,6 @@
 //Call the init function once the DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-  const apiKey = [API_KEY]
+  const apiKey = "<apiKey>"
   init(apiKey);
 })
 
@@ -49,6 +49,7 @@ function getAllObjects(searchObject){
     }
   });
 }
+
 //Iterates through all the pages possible from search call. 
 //Passes over data over to getEachMovie() function
 function getRestOfPages(searchObject, storePageNumber,searchValue){

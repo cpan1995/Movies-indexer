@@ -33,9 +33,10 @@ const getImdb = async () => {
     checkerFunction(unquieId)
 
 }
+
 function checkerFunction(parameter){
     let newArray = parameter.map(element => {
-        return `http://www.omdbapi.com/?i=${element}&apikey=[APIKEY]`
+        return `http://www.omdbapi.com/?i=${element}&apikey=<apiKey>`
     })
     fetchAllData(newArray);
 }
