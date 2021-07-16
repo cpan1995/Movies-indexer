@@ -31,6 +31,7 @@ function init(key){
       getAllObjects(searchObject);
       //movieName.reset();
     })
+    resetForm(movieName)
 }
 let storeObjectData = [];
 function getAllObjects(searchObject){
@@ -126,4 +127,11 @@ function removeContainer(){
   if(containerFinder){
     containerFinder.innerHTML = ''
   }
+}
+function resetForm(movieName) {
+  document.querySelector('#resetButton').addEventListener('click', () => {
+    let containerFinder = document.querySelector('.moviesList')
+    movieName.reset()
+    containerFinder.innerHTML = ""
+  })
 }
