@@ -5,7 +5,7 @@ How To Use:
 2. Change API in line 3
 3. Run command explorer.exe/open index.html
 
-This was minimum viable product assignement/project. We used OMDB api as our restful api. Unforunately we were only allowed 1000 calls per day per api key. So experience may vary. This was completed with a total of 4-5 hours of coding time. 
+This was minimum viable product assignement/project. We used OMDB api as our restful api. Unforunately we were only allowed 1000 calls per day per api key. So experience may vary. 
 
 #Index.js
 
